@@ -23,4 +23,14 @@ route.post("/create", async (req, res) => {
   res.send(productCreated);
 });
 
+route.delete("/delete", async (req, res) => {
+  const { id } = <ProductsModel>req.body;
+  const productsDestroied = await ProductsModel.destroy({
+    where: {
+      id
+    }
+  })
+  res.send(productsDestroied)
+});
+
 export default (r: Router) => r.use("/products", route);
