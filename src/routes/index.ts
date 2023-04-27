@@ -3,9 +3,9 @@ import { Router, Express } from "express";
 // Import the controller
 import ProductsRouter from "./ProductsRouter";
 
-const route = Router();
+const routes = Router();
 
-const routes = [ProductsRouter];
-routes.forEach((r) => r(route));
+const allRoutes = [ProductsRouter];
+allRoutes.forEach((r) => r(routes));
 
-export default (app: Express) => app.use("/api", route);
+export default routes;

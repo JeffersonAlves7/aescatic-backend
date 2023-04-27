@@ -19,13 +19,14 @@ app.use(
     cookie: { secure: false },
   })
 );
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", express.static(path.resolve("public")));
-routes(app);
+app.use("/api", routes);
 
 http.createServer(app).listen(port, () => {
   console.log(`Listen to port:${port}`);
