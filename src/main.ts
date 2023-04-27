@@ -7,6 +7,7 @@ import expressSession from "express-session";
 import path from "path";
 
 import routes from "./routes";
+import cors from "cors";
 
 const port = 3000;
 const app = express();
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 app.use("/", express.static(path.resolve("public")));
 app.use("/api", routes);
