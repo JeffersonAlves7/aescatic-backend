@@ -40,6 +40,7 @@ route.get("/category/:category", async (req, res) => {
     const products = await ProductsModel.findAll({ where: { category } });
     res.send(products);
   } catch (e) {
+    console.log(e);
     res.status(500).send("Internal Server Error");
   }
 });
