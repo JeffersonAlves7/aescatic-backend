@@ -13,9 +13,6 @@ class CategoryModel extends Model<
 > {
   declare id: CreationOptional<number>;
   declare name: string;
-  declare category: string;
-  declare description: string;
-  declare price: number;
 }
 
 CategoryModel.init(
@@ -26,9 +23,6 @@ CategoryModel.init(
       autoIncrement: true,
     },
     name: DataTypes.STRING(50),
-    category: DataTypes.STRING(30),
-    description: DataTypes.STRING,
-    price: DataTypes.NUMBER,
   },
   {
     tableName: "category",
@@ -36,3 +30,5 @@ CategoryModel.init(
     sequelize,
   }
 );
+
+export default CategoryModel;

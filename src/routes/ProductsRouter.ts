@@ -1,26 +1,25 @@
 import { Router } from "express";
 import ProductsModel from "../models/ProductsModel";
-import { sequelize } from "../database";
 
 const route = Router();
 
 route.get("/all", async (req, res) => {
-  await sequelize.sync();
   const products = await ProductsModel.findAll();
   res.send(products);
 });
 
 route.post("/create", async (req, res) => {
-  const { name, category, description, price } = <ProductsModel>req.body;
+  try {
+    const { name, category, price } = <ProductsModel>req.body;
 
-  const productCreated = await ProductsModel.create({
-    name,
-    category,
-    description,
-    price,
-  });
+    if (!name || !price || !category)
+      return res.status(500).send("Requires a name, price and category");
 
-  res.send(productCreated);
+    const productCreated = await ProductsModel.create(req.body);
+    res.send(productCreated);
+  } catch (e) {
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 route.delete("/delete", async (req, res) => {
@@ -31,6 +30,18 @@ route.delete("/delete", async (req, res) => {
     },
   });
   res.send(productsDestroied);
+});
+
+route.get("/category/:category", async (req, res) => {
+  try {
+    const { category } = <ProductsModel>req.params;
+    if (!category)
+      return res.status(500).send("Requires a name, price and category");
+    const products = await ProductsModel.findAll({ where: { category } });
+    res.send(products);
+  } catch (e) {
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 export default (r: Router) => r.use("/products", route);

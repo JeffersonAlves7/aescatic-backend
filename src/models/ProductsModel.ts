@@ -14,7 +14,7 @@ class ProductsModel extends Model<
   declare id: CreationOptional<number>;
   declare name: string;
   declare category: string;
-  declare description: string;
+  declare description: CreationOptional<string>;
   declare price: number;
 }
 
@@ -27,7 +27,9 @@ ProductsModel.init(
     },
     name: DataTypes.STRING(50),
     category: DataTypes.STRING(30),
-    description: DataTypes.STRING,
+    description: {
+      type: DataTypes.STRING,
+    },
     price: DataTypes.NUMBER,
   },
   {

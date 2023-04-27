@@ -8,6 +8,9 @@ import path from "path";
 
 import routes from "./routes";
 import cors from "cors";
+import { sequelize } from "./database";
+import ProductsModel from "./models/ProductsModel";
+import CategoryModel from "./models/CategoryModel";
 
 const port = 3000;
 const app = express();
@@ -30,6 +33,10 @@ app.use(cors());
 app.use("/", express.static(path.resolve("public")));
 app.use("/api", routes);
 
-http.createServer(app).listen(port, () => {
+http.createServer(app).listen(port, async () => {
   console.log(`Listen to port:${port}`);
+
+  await sequelize.sync();
+  await ProductsModel.sync();
+  await CategoryModel.sync();
 });
