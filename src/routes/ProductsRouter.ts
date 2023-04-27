@@ -27,10 +27,10 @@ route.delete("/delete", async (req, res) => {
   const { id } = <ProductsModel>req.body;
   const productsDestroied = await ProductsModel.destroy({
     where: {
-      id
-    }
-  })
-  res.send(productsDestroied)
+      id,
+    },
+  });
+  res.send(productsDestroied);
 });
 
 export default (r: Router) => r.use("/products", route);
